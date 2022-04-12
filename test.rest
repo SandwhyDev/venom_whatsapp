@@ -1,0 +1,8 @@
+###
+POST http://localhost:9000/api/kirim_pesan
+Content-Type: application/json
+
+{
+    "to" : "6281213655573",
+    "msg" : "test kirim pesan dari venom"
+}

@@ -1,0 +1,6 @@
+2022/04/12-16:02:04.620 2a08 Reusing MANIFEST C:\Users\sandy\terminal\backend\venom\venom_basic\tokens\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2022/04/12-16:02:04.620 2a08 Recovering log #3
+2022/04/12-16:02:04.667 2a08 Reusing old log C:\Users\sandy\terminal\backend\venom\venom_basic\tokens\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000003.log 
+2022/04/12-16:35:17.511 242c Level-0 table #5: started
+2022/04/12-16:35:17.575 242c Level-0 table #5: 1152037 bytes OK
+2022/04/12-16:35:17.578 242c Delete type=0 #3

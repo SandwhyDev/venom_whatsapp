@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Whatsapp bot</title>
+</head>
+<body>
+    <main class="w-screen h-screen flex flex-col justify-center items-center p-2 bg-slate-100 " >
+        <form class="w-[350px] p-6 flex flex-col gap-4 bg-white rounded-lg" onsubmit="handleSubmit(event)">
+            
+            <div id="number_area" class="w-full flex flex-col gap-4  "> 
+                <label for="to">Nomor Wa</label>
+            <input type="text" id="to" name="to" class="h-10 px-2 border-[1px] outline-blue-500 w-full  ">
+        </div>
+
+
+            <button type="button" onclick="setBulk()" class="w-[100px] bg-green-300 text-white ml-auto ">bulk</button>
+
+            <label for="msg">Pesan</label>
+            <textarea name="msg" id="msg" class="p-2 h-[120px] border-[1px] outline-blue-500 "></textarea>
+
+            <button type="submit" class="w-[100px] bg-blue-500 text-white h-10 ml-auto ">Kirim</button>
+        </form>
+    </main>
+</body>
+
+<script>
+
+    let bulk = false
+
+    function setBulk(){
+        bulk = !bulk
+        console.log(bulk);
+
+        let number_area = document.getElementById("number_area")
+
+        if(bulk){
+            return number_area.innerHTML = `
+            <label for="to">Kirim Banyak nomor</label>
+
+            <textarea name="to" id="to" class="p-2 h-[120px] border-[1px] outline-blue-500 w-full "></textarea>
+
+            `
+        }
+
+        number_area.innerHTML = `
+        <label for="to">Kirim satu nomor</label>
+
+        <input type="text" id="to" name="to" class="h-10 px-2 border-[1px] outline-blue-500 w-full  ">
+        
+        `
+    }
+    async function handleSubmit(event){
+        event.preventDefault()
+        let {to, msg} =await event.target
+      
+        if(bulk){
+            let removeSpave =await to.value.split(" ").join("")
+        let manyNumber = await removeSpave.split(",")
+
+            manyNumber.forEach((item,index)=>{
+                setTimeout(()=>{
+                    fetch("/api/kirim_pesan",{
+                method: "POST",
+                body:JSON.stringify({
+                    to: item,
+                    msg: msg.value
+                }),
+                headers:{
+                    "Content-Type" : "application/json"
+                }
+                
+            })
+                .then(res => res.json())
+                .then(data =>{
+                console.log(data);
+            })
+                .catch(err => console.error(err))
+                }, (index + 1) * 1000 )
+               
+            })
+
+            return  
+        }
+
+        fetch("/api/kirim_pesan",{
+                method: "POST",
+                body:JSON.stringify({
+                    to: to.value,
+                    msg: msg.value
+                }),
+                headers:{
+                    "Content-Type" : "application/json"
+                }
+                
+            })
+                .then(res => res.json())
+                .then(data =>{
+                console.log(data);
+            })
+                .catch(err => console.error(err))
+
+        
+    }
+</script>
+</html>
